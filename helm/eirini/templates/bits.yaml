@@ -10,9 +10,16 @@ data:
       level: debug
     private_endpoint: "https://bits.{{ .Release.Namespace }}.svc.cluster.local"
     {{- if .Values.services.loadbalanced }}
-    public_endpoint: https://registry.{{ index .Values.env.DOMAIN }}:6666
+    public_endpoint: https://registry.{{ index .Values.env.DOMAIN }}
     {{- else }}
     public_endpoint: https://bits.{{ index .Values.kube.external_ips 0 }}.nip.io
+    {{- end }}
+    {{- if .Values.opi.use_registry_ingress }}
+    registry_endpoint: "https://registry.{{ .Values.opi.ingress_endpoint }}"
+    {{- else if .Values.services.loadbalanced }}
+    registry_endpoint: "https://registry.{{ index .Values.env.DOMAIN }}"
+    {{- else }}
+    registry_endpoint: "https://registry.{{ index .Values.kube.external_ips 0 }}.nip.io"
     {{- end }}
     cert_file: /workspace/jobs/bits-service/certs/tls.crt
     key_file: /workspace/jobs/bits-service/certs/tls.key
