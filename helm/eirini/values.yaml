@@ -1,6 +1,4 @@
 opi:
-  image_tag: latest
-
   # set ingress endoint when 'use_registry_ingress' is set to true
   ingress_endpoint: no-ingress-set
   use_registry_ingress: false
@@ -9,11 +7,8 @@ opi:
   version: 0.0.0
   image_tag: latest
 
-bits:
-
 kube:
-  external_ips:
-  - 1.2.3.4
+  external_ips: []
 
 scf:
   version: 2.14.5
